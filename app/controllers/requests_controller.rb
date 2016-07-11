@@ -157,7 +157,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def request_params
-      params.require(:request).permit(:name, :oldcode, :submitted_on, :role, :submitter, :submitter_id, :requesttype, :urgent, :deployed_on, :origin,
+      params.require(:request).permit(:name, :oldcode, :submitted_on, :role, :requestor, :requestor_email, :submitter_id, :requesttype, :urgent, :deployed_on, :origin,
                                       :subject, :description, :pillar_response, :impact_hour, :impact_duration, :impact_schedule, :tested_on, :developed_on, :responded_on,:responder_id,
                                       :approved, :approver_id, :approved_on, :nea_decision, :decided_on, :decisiontext, :conditions, :decided_by, :modernize, :creator_id)
     end
