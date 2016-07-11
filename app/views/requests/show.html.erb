@@ -224,6 +224,13 @@
 
     <% end %>
        <% end %>
+
+<% if current_user.role == 1 %>
+
+        <%= link_to 'Destroy', @request, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %>
+        <% end %>
+
+
       </div>
       <div class="col-md-12">
         <h3>History</h3>
