@@ -64,11 +64,11 @@
 
 
       <tr>
-        <td>[<%= request.origin %>]
+        <td>
 <% if request.origin == 1 %>
-          PR-<%= request.id %>
-              <% else %>
           CR-<%= request.id %>
+              <% else %>
+          PR-<%= request.id %>
             <% end %>
           <% if request.oldcode %>&nbsp;&nbsp;<span style="background-color: #ccc; color: #fff">(<%= request.oldcode %>)</span><% end %>
         </td>
