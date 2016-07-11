@@ -1,0 +1,196 @@
+<style>
+  .chkpanel {
+      font-size: 9px;
+      font-weight: normal;
+
+
+  }
+
+
+
+</style>
+
+
+
+<div class="panel panel-default">
+  <div class="panel-body">
+
+
+<%= form_for(@resource) do |f| %>
+        <%= hidden_field_tag :locale, I18n.locale %>
+  <% if @resource.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@resource.errors.count, "error") %> prohibited this resource from being saved:</h2>
+
+      <ul>
+      <% @resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="row">
+  <div class="col-sm-6">
+
+    <div class="field">
+      <%= f.label :is_featured %><br>
+      <%= f.check_box :is_featured %>
+    </div>
+
+    <div class="field">
+      <%= f.label "Resource" %><br>
+      <%= f.text_field :title, :size => "75" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :body %><br>
+      <%= f.text_area :body, :cols => "75", :rows => "15" %>
+    </div>
+
+        <% if I18n.locale == :en %>
+
+    <div class="field">
+      <%= f.label 'Language' %><br>
+      <%= f.select(:language, Language.to_a, :include_blank => true, :class => "form-control") %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :submitter %><br>
+      <%= f.text_field :submitter %>
+    </div>
+
+    <div class="field">
+      <%= f.label :published_at %><br>
+      <%= f.date_select :published_at %>
+    </div>
+
+    <div class="field">
+      <%= f.label :position %><br>
+      <%= f.text_field :position %>
+    </div>
+
+    <div class="field">
+      <%= f.label "Organization [select]" %><br>
+
+      <%= f.collection_select(:organization_id, Organization.all, :id, :name, include_blank: true, :class => "form-control") %>
+    </div>
+
+    <div class="field">
+      <%= f.label "Organization" %><br>
+      <%= f.text_field :orgname %>
+    </div>
+    <div class="field">
+      <%= f.label :submitter_email %><br>
+      <%= f.text_field :submitter_email %>
+    </div>
+    <div class="field">
+      <%= f.label :submitter_phone %><br>
+      <%= f.text_field :submitter_phone %>
+    </div>
+
+        <div class="field">
+          <%= f.label "Project [select]" %><br>
+
+          <%= f.collection_select(:project_id, Project.all, :id, :name, include_blank: true, :class => "form-control") %>
+        </div>
+
+
+    <div class="field">
+      <%= f.label :mepi_project %><br>
+      <%= f.text_field :mepi_project %>
+    </div>
+    <div class="field">
+      <%= f.label :mepi_project_number %><br>
+      <%= f.text_field :mepi_project_number %>
+    </div>
+    <div class="field">
+      <%= f.label :focus_women %><br>
+      <%= f.check_box :focus_women %>
+    </div>
+    <div class="field">
+      <%= f.label :focus_youth %><br>
+      <%= f.check_box :focus_youth %>
+    </div>
+
+<% end %>
+
+
+
+
+  </div>
+
+
+  <% if I18n.locale == :en %>
+
+  <div class="col-sm-3 chkpanel">
+    <label class="label">Technical Areas</label>
+    <div class="row">
+      <%= hidden_field_tag "resource[technicalarea_ids][]", nil %>
+      <% @technicalarea_list.all.each do |area| %>
+          <%= check_box_tag "resource[technicalarea_ids][]", area.id,
+                            @resource.technicalarea_ids.include?(area.id), id: dom_id(area) %>
+          <%= label_tag dom_id(area), area.name %><br>
+      <% end %>
+
+    </div>
+
+  </div>
+  <div class="col-sm-3 chkpanel">
+    <label class="label">Target Groups</label>
+    <div class="row">
+      <%= hidden_field_tag "resource[targetgroup_ids][]", nil %>
+      <% @targetgroup_list.all.each do |group| %>
+          <%= check_box_tag "resource[targetgroup_ids][]", group.id,
+                            @resource.targetgroup_ids.include?(group.id), id: dom_id(group) %>
+          <%= label_tag dom_id(group), group.name %><br>
+      <% end %>
+
+    </div>
+  </div>
+
+
+
+    
+    <div class="col-sm-3 chkpanel">
+    <label class="label">Tags</label>
+    <div class="row">
+      <%= hidden_field_tag "resource[tag_ids][]", nil %>
+      <% @tag_list.all.each do |tg| %>
+          <%= check_box_tag "resource[tag_ids][]", tg.id,
+                            @resource.tag_ids.include?(tg.id), id: dom_id(tg) %>
+          <%= label_tag dom_id(tg), tg.name %><br>
+      <% end %>
+    
+    </div>
+    </div>
+      
+      
+      
+<% end %>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+    Basic panel example
+  </div>
+</div>

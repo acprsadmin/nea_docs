@@ -1,0 +1,48 @@
+helllo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%= form_tag edit_multiple_resources_path, method: :get do %>
+<table  cellspacing="0" width="100%">
+  <thead>
+  <tr>
+    <th></th>
+    <th>NID</th>
+    <th>Title</th>
+    <th>Organization</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <% @resources.each do |resource| %>
+
+      <tr>
+
+        <td><%= resource.nid %></td>
+        <td><%= resource.title %></td>
+
+
+        <td><%= check_box_tag "resource_ids[]", resource.id %></td>
+        <td><%= resource.orgname %></td>
+        <td><% if !resource.organization_id.nil? %><%= resource.organization.name %><% end %></td>
+        </td>
+
+      </tr>
+  <% end %>
+
+  </tbody>
+</table>
+    <%= submit_tag "Edit Checked" %>
+<% end %>

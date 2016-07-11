@@ -1,0 +1,138 @@
+<p id="notice"><%= notice %></p>
+
+<% if [1,3].include? current_user.role %>
+<%= link_to 'Submit New Request', new_request_path(:origin => 1), :class => "btn btn-small btn-success" %>
+<% end %>
+
+<% if [1,4].include? current_user.role %>
+<%= link_to 'Submit New Recommendation', new_request_path(:origin => 2), :class => "btn btn-small btn-primary" %>
+<% end %>
+
+
+
+
+
+<h1>Listing Requests</h1>
+
+<table id="requesttable"  class="hover" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th>Reference <span style="background-color: #ccc; color: #fff">(Old#)</span></th>
+      <th>Status</th>
+      <th>Decision</th>
+      <th>Subject</th>
+      <th>Requestor</th>
+      <th>Submit Date</th>
+
+      <th>Response</th>
+
+      <th>Decided on</th>
+
+
+    </tr>
+  </thead>
+
+  <tbody>
+  
+  
+  
+  
+  
+  
+  
+  
+    <% @requests.each do |request| %>
+
+
+
+      <% thisstatus = request.textstatus %>
+
+
+
+
+
+      <% if request.creator_id %>
+      <% creator = User.find(request.creator_id) %>
+      <% end %>
+        >
+         <% if request.responder_id  %>
+      <% responder = User.find(request.responder_id) %>
+      <% end %>
+         <% if request.decided_by  %>
+      <% decider = User.find(request.decided_by) %>
+      <% end %>
+
+
+      <tr>
+        <td>
+<% if request.origin == 1 %>
+          PR-<%= request.id %>
+              <% else %>
+          CR-<%= request.id %>
+            <% end %>
+          <% if request.oldcode %>&nbsp;&nbsp;<span style="background-color: #ccc; color: #fff">(<%= request.oldcode %>)</span><% end %>
+        </td>
+
+
+        <td>
+      <strong><%= request.textstatus %></strong>
+
+        </td>
+        <td>
+
+          <%= request.nea_decision_humanize if request.nea_decision %>
+
+        </td>
+        <td><%= link_to request.subject, request %><% if request.urgent == true %> <span style="color:red; font-weight: bold;">Urgent!</span><% end %></td>
+        <td><%= request.requestor %></td>
+
+        <td><%= request.created_at.strftime("%m/%d") %></td>
+        <td><%= request.responded_on.strftime("%m/%d") if request.responded_on %></td>
+
+
+
+        <td><%= request.decided_on.strftime("%m/%d") if request.decided_on  %></td>
+
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#requesttable').DataTable();
+    } );
+</script>
+

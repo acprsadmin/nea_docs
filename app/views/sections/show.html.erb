@@ -1,0 +1,119 @@
+<div class="row">
+
+  <div class="col-sm-8">
+  <div class="panel panel-default">
+    <div class="panel-body">
+  <p id="notice"><%= notice %></p>
+
+    <div class="row">
+      <div class="col-sm-6">
+      <% if @section.ordernum != 1 %>
+        <%= link_to section_path(@backid.id) do %><i class="fa fa-arrow-left"></i>  <%= @backid.name %><% end %><br>
+        <% end %>
+        </div>
+      <div class="col-sm-6">
+        <% if @section.ordernum != @maxnum %>
+      <div class="pull-right">
+      <%= link_to section_path(@nextid.id) do %> <%= @nextid.name %><i class="fa fa-arrow-right"></i><% end %><br>
+  </div>
+            <% end %>
+      </div>
+      </div>
+  <div class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-2 control-label"></label>
+      <div class="col-sm-10">
+        <%= @section.level.name %>
+        <h3><%= @section.name %></h3>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Manual: </label>
+      <div class="col-sm-10">
+        <%= @section.book_humanize %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Section Type: </label>
+      <div class="col-sm-10">
+        <%= @section.pagetype_humanize %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Body</label>
+      <div class="col-sm-10">
+        <%= @section.body.html_safe if !@section.body.nil? %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Order number</label>
+      <div class="col-sm-10">
+        <%= @section.ordernum %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Image</label>
+      <div class="col-sm-10">
+        <%= image_tag @section.image.url %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Image Caption</label>
+      <div class="col-sm-10">
+        <%= @section.caption %>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Image Placement</label>
+      <div class="col-sm-10">
+        <%= @section.imageset_humanize %>
+      </div>
+    </div>
+
+
+  <% if user_signed_in? %>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <%= link_to 'Edit', edit_section_path(@section), :class => "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+
+  <% end %>
+
+
+
+
+  <%= link_to 'Back', sections_path %>
+
+  <br><BR>
+      <% if user_signed_in? %>
+  <%= link_to 'Destroy', @section, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+
+    </div>
+  </div>
+
+
+</div>
+
+  <div class="col-sm-4">
+  <div class="panel panel-default">
+  <div class="panel-body">
+  <h3>Admin Notes</h3>
+  <%= @section.adminnotes.html_safe if !@section.adminnotes.nil? %>
+
+    <h3>Comments</h3>
+
+
+
+  </div>
+  </div>
+  </div>
+
+</div>

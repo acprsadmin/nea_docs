@@ -1,0 +1,128 @@
+
+
+  <div class="col-sm-4">
+
+    <% @toppost.each do |top| %>
+
+<div class="col-sm-12">
+        <% toplogo = SiteImage.where('imageable_type = ? and imageable_id = ? and is_logo = true', 'post', top.id) %>
+        <% toplogo.each do |l| %>
+            <%= image_tag l.image.url, :width => "300", :class => "pull-left" %>
+
+
+        <% end %>
+</div>
+
+
+
+
+        <h2><%= link_to top.title, top %></h2>
+        <%= top.description %>
+
+        <% end %>
+
+    <h2><%=t :special %></h2>
+
+
+    <a href="" class="btn btn-primary"><%=t :on_women %></a><BR><BR>
+    <a href="" class="btn btn-primary"><%=t :on_youth %></a><BR><BR>
+
+
+
+  </div>
+
+
+  <div class="col-sm-5">
+
+
+
+
+    <%= render 'visitors/image_banner' %>
+    <h2>Featured Resources</h2>
+<div class="row" style="border">
+<% @featured.each do |feature| %>
+
+
+
+
+
+  <div class="col-sm-3">
+    <% thislogo = SiteImage.where('imageable_type = ? and imageable_id = ? and is_logo = true', 'resource', feature.id) %>
+    <% thislogo.each do |l| %>
+        <%= image_tag l.image.url, :width => "75", :class => "pull-right" %>
+
+
+    <% end %>
+
+
+  </div>
+
+  <div class="col-sm-9">
+    <h3><%= link_to feature.title, feature %></h3>
+    Organization: <%= feature.organization.name %><br>
+    <% if !feature.project_id.nil? %>
+    Project: <%= feature.project.name %></br>
+    <% end %>
+    <% if !feature.series_id.nil? %>
+        Series: <%= feature.series.name %></br>
+  <% end %>
+   Technical Areas:
+    <% feature.technicalareas.each do |area| %>
+        <%= link_to area.name %>
+        &nbsp;|&nbsp;
+    <% end %><br>
+
+
+
+   Target Groups:
+    <% feature.targetgroups.each do |group| %>
+        <%= link_to group.name %>
+        &nbsp;|&nbsp;
+    <% end %><br>
+    <%= feature.body %>
+
+
+</div>
+
+<% end %>
+</div>
+</div>
+
+<div class="col-sm-3">
+
+  <%= form_tag resources_path, :method => 'get' do |f| %>
+      <%= hidden_field_tag :locale, I18n.locale %>
+
+
+      <div class="field">
+        Keyword Search<br>
+        <%= text_field_tag :search_term %>
+      </div>
+
+
+
+      <div class="actions">
+        <%= submit_tag "Search" %>
+      </div>
+  <% end %>
+
+
+<h2><%=t :latest_resources %></h2>
+  <% @latest_resources.each do |rs| %>
+
+      <%= link_to rs do %><%= rs.title %><% end %><BR><BR>
+  <% end %>
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+<p><%= link_to 'Users:', users_path %> <%= User.count %> registered</p>

@@ -1,0 +1,12 @@
+
+<% if params[:origin] == 2 %>
+    <% @panelheader = 'Edit Recommendation' %>
+<% else %>
+    <% @panelheader = 'Edit Request' %>
+
+<% end %>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @request %> |
+<%= link_to 'Back', requests_path %>

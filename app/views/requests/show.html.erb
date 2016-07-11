@@ -1,0 +1,329 @@
+<%= current_user.role %>
+<%= current_user.email %>
+
+
+<% if @request.nea_decision == 1 %>
+    <% dlight='darkblue' %>
+    <% dtext='#fff' %>
+<% elsif @request.nea_decision == 2 %>
+    <% dlight='red' %>
+    <% dtext='#fff' %>
+<% elsif @request.nea_decision == 3 %>
+    <% dlight='green' %>
+    <% dtext='#fff' %>
+<% elsif @request.nea_decision == 4 %>
+    <% dlight='gray' %>
+    <% dtext='#000' %>
+<% else %>
+    <% dlight='white' %>
+    <% dtext='#000' %>
+
+<% end %>
+<%= current_user.role %>
+
+<div class="container">
+  <%= @request.origin_humanize %><br>
+  <h3> <% if @request.urgent == true %><strong>Urgent</strong><% end %> </h3>
+
+  <h2> <%= @request.subject %></h2>
+
+  <div class="row">
+  
+  <div class="col-md-6">
+
+
+
+
+    <p>
+      <strong>Status:</strong>
+
+      <strong><%= @thisstatus %></strong>
+
+    </p>
+    <p>
+  
+  
+  
+  <p>
+    <strong>Type:</strong>
+    <%= @request.requesttype_humanize if @request.requesttype %>
+  </p>
+  <p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= @request.description %>
+  </p>
+
+
+
+  <p>
+    <strong>Record Created:</strong>
+    <%= @request.created_at %>  by: <%= @creator.email %>
+  </p>
+
+    <p>
+      <strong>Request Submitted to Pillar:</strong>
+      <%= @request.submitted_on %>  by: <%= @submitter.email if @request.submitter_id %>
+    </p>
+
+  <hr>
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Pillar Response</div>
+      <div class="panel-body">
+        <p>
+          <strong>Responded:</strong>
+          <% if @request.responded_on %>
+          <%= @request.responded_on %>  by: <%= @responder.email if @responder.email %>
+        <% end %>
+              </p>
+
+
+        <p>
+          <strong>Initial Response:</strong>
+          <%= @request.pillar_response.html_safe if @request.pillar_response %>
+        </p>
+
+        <p>
+          <strong>Impact hour:</strong>
+          <%= @request.impact_hour %>
+        </p>
+
+        <p>
+          <strong>Impact duration:</strong>
+          <%= @request.impact_duration %>
+        </p>
+
+        <p>
+          <strong>Impact schedule:</strong>
+          <%= @request.impact_schedule %>
+        </p>
+
+      </div>
+    </div>
+
+
+
+
+<hr>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">NEA Decision</div>
+      <div class="panel-body">
+  <p>
+    <strong>Decision:</strong>
+     <span style="color: <%= dtext %>; background-color: <%= dlight %>">
+       <% if @request.nea_decision %>
+      <%= @request.nea_decision_humanize %>
+      </span>
+      <% else %>
+           Pending
+           <% end %>
+
+           <br>
+       <% if @request.decided_on %>
+    <%= @request.decided_on %>  by: <%= @decider.email if @request.decided_by %>
+           <% end %>
+  </p>
+
+  <p>
+    <strong>Decisiontext:</strong>
+    <%= @request.decisiontext %>
+  </p>
+  <p>
+    <strong>Conditions:</strong>
+    <%= @request.conditions %>
+  </p>
+
+      </div>
+    </div>
+
+
+
+
+    <p>
+  <strong>Move to Testing Server:</strong>
+   <%= @request.tested_on if @request.tested_on %>
+</p>
+
+
+  <p>
+    <strong>Deployed to Production:</strong>
+    <%= @request.deployed_on if @request.deployed_on %>
+  </p>
+
+
+
+
+
+  </div>
+    <div class="col-md-6">
+      <div class="col-md-12">
+    <h3>Actions</h3>
+
+        <STRONG><%= link_to 'Back to Requests List', requests_path %></STRONG>
+        <BR>        <BR>
+
+      <% if @request.deployed_on %>
+          <%= link_to 'Create New Request from Issue', submit_path(:request_id => @request.id, :reqaction => 'clone'), 'data-toggle' => 'modal', :class => "btn btn-default" %><br><br>
+          <%= link_to 'Return to Develop', submit_path(:request_id => @request.id, :reqaction => 'develop'), 'data-toggle' => 'modal', :class => "btn btn-success" %><br><br>
+
+    <% elsif @request.decided_on %>
+
+           <% if @request.nea_decision == 1 %>
+                <% if current_user.role != 3 %>
+                   <% if !@request.developed_on %>
+                      <%= link_to 'Begin Development', submit_path(:request_id => @request.id, :reqaction => 'develop'), 'data-toggle' => 'modal', :class => "btn btn-success" %><br><br>
+                  <% elsif @request.developed_on and !@request.tested_on %>
+                      <%= link_to 'Moved to Testing', submit_path(:request_id => @request.id, :reqaction => 'test'), 'data-toggle' => 'modal', :class => "btn btn-success" %><br><br>
+                   <% elsif @request.developed_on and @request.tested_on and !@request.deployed_on %>
+                      <%= link_to 'Deployed to Production', submit_path(:request_id => @request.id, :reqaction => 'deploy'), 'data-toggle' => 'modal', :class => "btn btn-success" %><br><br>
+                      <%= link_to 'Return to Development', submit_path(:request_id => @request.id, :reqaction => 'develop'), 'data-toggle' => 'modal', :class => "btn btn-success" %><br><br>
+                   <% end %>
+                <% end %>
+        <% elsif @request.nea_decision == 2 %>
+                  <%= link_to 'Revised to New Request', submit_path(:request_id => @request.id, :reqaction => 'clone'), 'data-toggle' => 'modal', :class => "btn btn-primary" %><br><br>
+        <% elsif @request.nea_decision == 3 or @request.nea_decision == 4 %>
+
+                <% if current_user.role != 4 %>
+             <%= link_to 'Approve Request', submit_path(:request_id => @request.id, :reqaction => 'approve'), 'data-toggle' => 'modal', :class => "btn btn-success" %><br><br>
+             <%= link_to 'Reject Request', submit_path(:request_id => @request.id, :reqaction => 'reject'), 'data-toggle' => 'modal', :class => "btn btn-danger" %><br><br>
+             <%= link_to 'Create New Request', submit_path(:request_id => @request.id, :reqaction => 'clone'), 'data-toggle' => 'modal', :class => "btn btn-default" %><br><br>
+                <% end %>
+        <% end %>
+    <% else %>
+
+
+          <% if @request.responded_on %>
+                <% if current_user.role != '4' %>
+                      <%= link_to 'Edit', edit_request_path(@request), :class => "btn btn-primary" %> <br><br>
+                      <% if !@request.decided_on %>
+                      <%= link_to 'Confirm Decision', submit_path(:request_id => @request.id, :reqaction => 'decide'), 'data-toggle' => 'modal', :class => "btn btn-success" %>
+                        Set as: <strong>  <%= @request.nea_decision_humanize %></strong>
+                        <br><br>
+                      <% end %>
+                <% end %>
+
+          <% elsif !@request.responded_on and @request.submitted_on %>
+                <%# if !@current.user.role != 3 %>
+                <% if current_user.role != '3' %>
+              <%= link_to 'Edit', edit_request_path(@request), :class => "btn btn-primary" %> <br><br>
+              <%= link_to 'Respond to NEA', submit_path(:request_id => @request.id, :reqaction => 'respond'), 'data-toggle' => 'modal', :class => "btn btn-success" %><br><br>
+<% end %>
+
+          <% elsif !@request.submitted_on %>
+              <%= link_to 'Edit', edit_request_path(@request), :class => "btn btn-primary" %> <br><br>
+              <% if @request.origin == 1 %>
+                <%= link_to 'Submit to Pillar', submit_path(:request_id => @request.id, :reqaction => 'submit'), 'data-toggle' => 'modal', :class => "btn btn-success" %><br><br>
+              <% else %>
+                <%= link_to 'Submit to NEA', submit_path(:request_id => @request.id, :reqaction => 'recommend'), 'data-toggle' => 'modal', :class => "btn btn-success" %><br><br>
+              <% end %>
+
+
+    <% end %>
+       <% end %>
+      </div>
+      <div class="col-md-12">
+        <h3>History</h3>
+        <table class="table table-striped">
+          <thead>
+
+          <td>Date</td>
+          <td>Action</td>
+          <td>User</td>
+                  </thead>
+
+          <tbody>
+         <% @requestlog.each do |log| %>
+          <tr>
+              <td><%= log.created_at %></td>
+            <td><strong><%= log.reqaction %>
+
+            <% if log.reqaction == 'decide' %> <strong><%= log.nea_decision_humanize if log.nea_decision %></strong> <% end %>
+            </strong>
+            </td>
+
+            <td><%= log.user.email %></td>
+            </tr>
+
+
+
+
+        <% end %>
+          </tbody>
+</table>
+
+
+      </div>
+      <div class="col-md-12">
+        <h3>Comments</h3>
+
+        <table class="table table-striped">
+          <thead>
+
+          <td>Date</td>
+          <td>Action</td>
+          <td>User</td>
+          </thead>
+            <tbody>
+
+        <% @comments.each do |comment| %>
+              <td>
+                <td><%= comment.created_at %> <%= comment.user.email %><br>
+                <%= comment.body %></td>
+
+              </tr>
+
+
+
+
+
+        <% end %> <!-- end show comments -->
+            </tbody>
+</table>
+
+        <div class="alert alert-info fade in">
+
+          <% if current_user %>
+
+              <h3>Add Comment</h3>
+
+              <%= simple_form_for @new_comment do |f| %>
+                  <%= f.hidden_field :commentable_id, :value => @request.id %>
+                  <%= f.hidden_field :commentable_type, :value => 'request' %>
+                  <%= f.text_area :body, :class => "form-control", :rows => "7" %>
+                  <%= f.submit 'Submit' %>
+              <% end %>
+
+
+          <% end %>
+        </div>
+
+
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

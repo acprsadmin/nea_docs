@@ -1,0 +1,44 @@
+
+
+<%= form_tag update_multiple_resources_path, method: :put do %>
+
+
+    <% @resources.each do |resource| %>
+        <h2><%= resource.title %></h2>
+        <%= fields_for "resources[]", resource do |f| %>
+            <% if resource.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(resource.errors.count, "error") %> prohibited this resource from being saved:</h2>
+                  <ul>
+                    <% resource.errors.full_messages.each do |msg| %>
+                        <li><%= msg %></li>
+                    <% end %>
+                  </ul>
+                </div>
+            <% end %>
+
+
+
+
+              <div class="field">
+                <%= f.label "Organization" %><br>
+                <%= f.text_field :orgname %>
+              </div>
+
+              <div class="field">
+                <%= f.label "Organization [select]" %><br>
+
+                <%= f.collection_select(:organization_id, Organization.all, :id, :name, include_blank: true, :class => "form-control") %>
+              </div>
+
+            ...
+        <% end %>
+    <% end %>
+
+
+
+    <div class="actions">
+      <%= submit_tag "Update" %>
+    </div>
+<% end %>
+

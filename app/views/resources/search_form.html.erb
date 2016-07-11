@@ -1,0 +1,55 @@
+<div class="col-sm-12  <%= I18n.locale.to_s %>">
+    <div class="panel panel-default">
+
+
+        <h2 class="pagetitle">Search Maktabat Resources</h2>
+
+        <div class="panel-body">
+
+            <%= form_tag resources_path, :method => 'get' do %>
+            <%= hidden_field_tag :locale, I18n.locale %>
+
+
+            <div class="col-sm-6">
+
+                <div class="field">
+                    Keyword Search<br>
+                    <%= text_field_tag :search_term %>
+                </div>
+
+                <br><br>
+
+                Technical Areas<br>
+                <%= select_tag "technicalarea_ids", options_from_collection_for_select(Technicalarea.all, "id", "name"), { :multiple => true, :prompt => "select -->"} %>
+                <br><br>
+
+                Target Groups<br>
+                <%= select_tag "targetgroup_ids", options_from_collection_for_select(Targetgroup.all, "id", "name"), { :multiple => true, :prompt => "select -->" } %>
+                <br><br>
+
+                Organization<br>
+                <%= select_tag "organization_ids", options_from_collection_for_select(Organization.all, "id", "name"), { :multiple => true, :prompt => "select -->" }%>
+                <br><br>
+
+                Series<br>
+                <%= select_tag "series_ids", options_from_collection_for_select(Series.where('id < ?', 35), "id", "name"), {:multiple => true, :prompt => "select -->" } %>
+                <br><br>
+
+
+
+            </div>
+            <div class="col-sm-6">
+
+                <div class="actions">
+                    <%= submit_tag "Search", :class => "btn btn-primary" %>
+                </div>
+                <br>
+                <br>
+                <%= submit_tag  "Reset the Search Form", :type => "reset" %>
+            </div>
+
+
+            <% end %>
+        </div>
+    </div>
+</div>

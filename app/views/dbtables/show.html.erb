@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @dbtable.name %>
+</p>
+
+<p>
+  <strong>Dbname:</strong>
+  <%= @dbtable.dbname %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @dbtable.description %>
+</p>
+
+<p>
+  <strong>Tabletype:</strong>
+  <%= @dbtable.tabletype %>
+</p>
+
+<%= link_to 'Edit', edit_dbtable_path(@dbtable) %> |
+<%= link_to 'Back', dbtables_path %>

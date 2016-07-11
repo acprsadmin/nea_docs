@@ -1,0 +1,146 @@
+<style>
+  input.sectionname {
+    width: 95%;
+  }
+
+
+</style>
+
+<div class="col-sm-8">
+  <div class="panel panel-default">
+    <div class="panel-body">
+
+
+      <%= form_for @section, :class => "form-horizontal", html: { multipart: true } do |f| %>
+          <% if @section.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@section.errors.count, "error") %> prohibited this section from being saved:</h2>
+
+                <ul>
+                  <% @section.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+          <% end %>
+
+
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Section Title</label>
+          <div class="col-sm-10">
+            <%= f.text_field :name, :class => "sectionname" %>
+          </div>
+        </div>
+
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Doc Assignment</label>
+            <div class="col-sm-10">
+              <%= f.select(:book, Book.to_a, :class => "form-control", :label => false ) %>
+
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Section Type</label>
+            <div class="col-sm-10">
+              <%= f.select(:pagetype, Pagetype.to_a, :class => "form-control", :label => false ) %>
+
+            </div>
+          </div>
+
+
+
+
+          <div class="form-group">
+            <div class="col-sm-12">
+              Body
+            <%= f.text_area :body, :id => "edit", :cols => "100", :rows => "25" %>
+          </div>
+        </div>
+
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Order</label>
+            <div class="col-sm-10">
+              <%= f.number_field :ordernum, :step => "0.5" %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Level</label>
+            <div class="col-sm-10">
+              <%= f.collection_select(:level_id, Level.all, :id, :name, include_blank: true, :class => "form-control") %>
+            </div>
+          </div>
+
+
+
+
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><br></label>
+            <div class="col-sm-10">
+              <br><br><br>
+            </div>
+          </div>
+
+
+
+
+
+          <div class="form-group">
+          <label class="col-sm-2 control-label">Image</label>
+          <div class="col-sm-10">
+
+
+
+            <%= f.file_field :image %><br>
+            Caption: <%= f.text_field :caption, :class => "sectionname" %><br>
+            Placement: <%= f.select(:imageset, Imageset.to_a, :include_blank => true, :class => "form-control") %>
+          </div>
+        </div>
+
+
+
+          <div class="form-group">
+            <div class="col-sm-12">
+              <br>
+              <hr>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+          <label class="col-sm-2 control-label">Admin Notes</label>
+          <div class="col-sm-10">
+            <%= f.text_area :adminnotes, :id => "adminedit", :cols => "100", :rows => "15" %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <%= f.submit :class => "btn btn-primary" %>
+          </div>
+
+        </div>
+      </div>
+
+
+
+      <% end %>
+</div>
+  </div>
+  </div>
+
+<!-- Initialize the editor. -->
+<script>
+  $(function() {
+    $('#edit').froalaEditor()
+  });
+  $(function() {
+    $('#adminedit').froalaEditor()
+  });
+</script>

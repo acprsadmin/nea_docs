@@ -1,0 +1,155 @@
+<style>
+
+  td.s1 {
+    font-size: 14px;
+    color: #333;
+  }
+
+  td.s2 {
+    font-size: 14px;
+    color: orangered;
+    padding-left: 20px;
+
+  }
+  td.s3 {
+    font-size: 14px;
+    color: #999;
+    padding-left: 40px;
+  }
+
+  .toc {
+    padding: 5px;
+  }
+        tr.list {
+          border-top: #999 solid 1px;
+        }
+
+</style>
+<script>
+  $(document).ready(function() {
+    $('#sections').DataTable();
+  } );
+</script>
+
+
+
+
+
+
+
+
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Sections</h1>
+
+<table class="toc" cellspacing="5" width="100%">
+  <thead>
+    <tr class="list">
+      <% if user_signed_in? %>
+        <th>Ordernum</th>
+        <th>Insert New</th>
+        <th>Delete</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      <% end %>
+
+
+      <th>Name</th>
+      <th></th>
+      <th>Docs</th>
+      <th>Type</th>
+      <th>Body Words</th>
+      <th>Admin Words</th>
+      <th>Image</th>
+      <th>Caption</th>
+
+
+
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sections.each do |section| %>
+      <%if section.level_id == 1 %>
+        <% levelhead = 's1' %>
+      <% elsif section.level_id == 2 %>
+        <% levelhead = 's2' %>
+      <% elsif section.level_id == 3 %>
+        <% levelhead = 's3' %>
+      <% else %>
+          <% levelhead = 's4' %>
+
+      <% end %>
+
+
+  <tr class="list">
+    <% if user_signed_in? %>
+    <td><%= section.ordernum %></td>
+    <td><%= link_to new_section_path({:ordnum => section.ordernum, :level => section.level_id}) do %><i class="fa fa-plus"></i><% end %></td>
+    <td>
+
+      <%= link_to section, method: :delete, data: { confirm: 'Are you sure?' } do %><i class="fa fa-trash"></i><% end %>
+
+    </td>
+    <td><%= link_to sections_path({:moveit => 1, :section_id => section.id}) do %><i class="fa fa-arrow-up"></i><% end %></td>
+    <td><%= link_to sections_path({:moveit => 2, :section_id => section.id}) do %><i class="fa fa-arrow-down"></i><% end %></td>
+
+
+    <td>
+      <% if section.level_id != 3 %>
+          <%= link_to sections_path({:moveit => 3, :section_id => section.id}) do %><i class="fa fa-arrow-right"></i><% end %>
+      <% end %>
+    <td>
+      <%if !section.level_id != 1 %>
+        <%= link_to sections_path({:moveit => 4, :section_id => section.id}) do %><i class="fa fa-arrow-left"></i><% end %>
+          <% end %>
+    </td>
+<% end %>
+
+    <td class="<%= levelhead %>">
+
+
+          <%= section.name %>
+
+
+
+        </td>
+    <td><%= link_to section do %><i class="fa fa-edit"></i><% end %></td>
+
+    <td><%= section.book_humanize %></td>
+    <td><%= section.pagetype_humanize %></td>
+
+        <td><% if !section.body.nil? %>
+          <%= section.body.scan(/\w+/).size %>
+        <% end %>
+        </td>
+      <td><% if !section.adminnotes.nil? %>
+            <%= section.adminnotes.scan(/\w+/).size %>
+        <% end %>
+      </td>
+    <td>
+    <% if !section.image_file_name.blank? and !section.image_file_name.nil? %>
+        <strong>IMG</strong>
+
+
+    <% end %>
+      </td>
+      <td>
+        <%= section.caption %>
+
+      </td>
+
+
+
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Section', new_section_path %>

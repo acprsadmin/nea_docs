@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Dbtables</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Dbname</th>
+      <th>Description</th>
+      <th>Tabletype</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dbtables.each do |dbtable| %>
+      <tr>
+        <td><%= dbtable.name %></td>
+        <td><%= dbtable.dbname %></td>
+        <td><%= dbtable.description %></td>
+        <td><%= dbtable.tabletype %></td>
+        <td><%= link_to 'Show', dbtable %></td>
+        <td><%= link_to 'Edit', edit_dbtable_path(dbtable) %></td>
+        <td><%= link_to 'Destroy', dbtable, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Dbtable', new_dbtable_path %>

@@ -1,0 +1,269 @@
+
+<style>
+    .pagetitle {
+    color: forestgreen;
+    font-size: 32px;
+    }
+    .description {
+
+    }
+
+
+</style>
+
+<p id="notice"><%= notice %></p>
+
+<div class="col-sm-12  <%= I18n.locale.to_s %>">
+  <div class="panel-heading">
+
+    <div class="col-sm-6  <%= I18n.locale.to_s %>">
+    Training Resource:<br>
+
+    <% if !@resource.series_id.nil? %>
+        <small class="color: orange">Series: <%= @resource.series.name %></small><br>
+    <% end %>
+
+    <h2 class="pagetitle"><%= @resource.title %></h2>
+  </div>
+    <div class="col-sm-6  <%= I18n.locale.to_s %>">
+  <%= link_to 'Edit', edit_resource_path(@resource), :class => "mb-sm btn btn-primary pull-right    " %>
+      </div>
+</div>
+
+
+<div class="col-sm-12  <%= I18n.locale.to_s %>">
+
+  <div class="col-sm-6  <%= I18n.locale.to_s %>">
+
+    <div class="panel panel-default">
+
+    <div class="panel-body">
+
+
+      <div class="description">
+        <%= raw(@resource.body) %>
+        </div>
+<hr>
+        <p>
+            <strong>Organization:</strong>
+            <% if !@resource.organization_id.nil? %>
+                <%= link_to @resource.organization do %><%= @resource.organization.name %><% end %>
+            <% end %>
+            <small><%= @resource.orgname %></small>
+
+        </p>
+        <p>
+            <strong>Project Name:</strong>
+
+          <% if !@resource.project_id.nil? %>
+              <%= link_to @resource.project do %><%= @resource.project.name %><% end %>
+          <% end %>
+            <small ><%= @resource.mepi_project %></small>
+        </p>
+
+
+
+
+      <% if @resource.is_featured == true %>
+          <p><button type="button" class="btn btn-default">Featured</button></p>
+      <% end %>
+
+
+
+        <p>
+            <strong>Published:</strong>
+            <% if !@resource.published_at.nil? %>
+              <%= @resource.published_at.strftime("%F")    %>
+              <% end %>
+
+        </p>
+
+        <p>
+            <strong>Pages:</strong>
+            <%= @resource.number_pages %>
+        </p>
+
+      <% if @resource.focus_women == true or @resource.focus_youth == true %>
+          <p>
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default">Focus: </button>
+        <% if @resource.focus_women == true %>
+        <button type="button" class="btn btn-primary">Women</button>
+            <% end %>
+        <% if @resource.focus_youth == true %>
+        <button type="button" class="btn btn-primary">Youth</button>
+        <% end %>
+      </div>
+          </p>
+<% end %>
+
+
+
+
+      <p>
+        <strong>Technical Areas:</strong>
+        <% @resource.technicalareas.each do |area| %>
+            <%= link_to area.name %>
+            &nbsp;|&nbsp;
+        <% end %>
+        </p>
+
+      <p>
+        <strong>Target Groups:</strong>
+        <% @resource.targetgroups.each do |group| %>
+            <%= link_to group.name %>
+            &nbsp;|&nbsp;
+        <% end %>
+      </p>
+      <p>
+      <strong>Country Origin:</strong>
+      <% @resource.countries.each do |country| %>
+          <%= link_to country.name %>
+          &nbsp;|&nbsp;
+      <% end %>
+      </p>
+      <p>
+      <strong>Tags:</strong>
+      <% @resource.tags.each do |tag| %>
+          <%= link_to tag.name %>
+          &nbsp;|&nbsp;
+      <% end %>
+      </p>
+
+
+
+
+        <%= link_to 'Destroy', @resource, method: :delete, data: { confirm: 'Are you sure?' } %>
+</div>
+
+</div>
+</div>
+
+
+      <div class="col-sm-6  <%= I18n.locale.to_s %>">
+
+
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Attachments</div>
+            <div class="panel-body">
+              <% @resourcedocuments.each do |doc| %>
+                  <%= link_to doc.document_file_name , doc.document.url(:original, false) %>
+                  <%= doc.document_updated_at %><br>
+              <% end %>
+              <%= simple_form_for @new_site_document do |form| %>
+                  <%= form.hidden_field :documentable_id, :value => @resource.id %>
+                  <%= form.hidden_field :documentable_type, :value => 'resource' %>
+                  <%= form.input :document, as: :file %>
+                  <%= form.button :submit, :value => 'Upload Document', :class => "mb-sm btn btn-primary" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Images</div>
+            <div class="panel-body">
+
+
+
+              <%= form_tag updatelogos_path, method: :put do %>
+                  <%= hidden_field_tag :resource_id, @resource.id %>
+                  <table border="1">
+                  <% @resourceimages.each do |doc| %>
+                        <%= fields_for "site_images[]", doc do |f| %>
+
+                        <tr>
+                     <td>
+
+
+                       <%# if doc.is_logo == true %>
+
+                           <%= f.check_box :is_logo %>
+                       <%#= f.check_box_tag "site_image_ids[]", doc.id, {:checked => "checked"}  %>
+                        <%# else %>
+                           <%#= f.check_box_tag "site_image_ids[]", doc.id %>
+                       <%# end %>
+
+                     </td>
+                      <td><%= image_tag doc.image.url, :width => "50", :class => "pull-right" %></td>
+                      <td><%= link_to doc.image_file_name , doc.image.url(:original, false) %></td>
+                      <td><%= doc.image_updated_at %></td>
+                   </tr>
+                            <% end %>
+                  <% end %>
+                  </table>
+                  <%= submit_tag "Update logos" %>
+              <% end %>
+
+
+              <%= simple_form_for @new_site_image do |form| %>
+                  <%= form.hidden_field :imageable_id, :value => @resource.id %>
+                  <%= form.hidden_field :imageable_type, :value => 'resource' %>
+                  <%= form.input :image, as: :file %>
+                  <%= form.button :submit, :value => 'Upload Image', :class => "mb-sm btn btn-primary" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Comments and Ratings</div>
+            <div class="panel-body">
+
+              <% !if @mycomments.nil? %>
+                  <% @mycomments.each do |comment| %>
+                      <div class="people-say margin-bottom-20">
+                        <div class="overflow-h">
+                          <span><a href="#"> <%= comment.user.email %></a></span>
+                          <small class="hex pull-right"><%= comment.created_at %></small>
+
+                          <p><%= comment.body %></p>
+                          <%#= comment.commentable_type %>
+
+                        </div>
+                      </div>
+                  <% end %> <!-- end show comments -->
+              <% end %>
+
+
+              <div class="alert alert-info fade in">
+
+                <%# if current_user %>
+
+
+
+                <%= simple_form_for @new_comment do |f| %>
+                    <%= f.hidden_field :commentable_id, :value => @resource.id %>
+                    <%= f.hidden_field :commentable_type, :value => 'resource' %>
+                    <%= f.text_area :body, :class => "form-control", :rows => "7" %>
+                    <%= f.submit 'Submit' %>
+                <% end %>
+
+                <%# end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+
+</div>
+      </div>
+  </div>
+
+
+
+
+
+
+
+
+
+

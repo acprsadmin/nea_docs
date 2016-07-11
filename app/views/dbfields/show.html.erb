@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @dbfield.name %>
+</p>
+
+<p>
+  <strong>Dbname:</strong>
+  <%= @dbfield.dbname %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @dbfield.description %>
+</p>
+
+<p>
+  <strong>Fieldtype:</strong>
+  <%= @dbfield.fieldtype %>
+</p>
+
+<%= link_to 'Edit', edit_dbfield_path(@dbfield) %> |
+<%= link_to 'Back', dbfields_path %>

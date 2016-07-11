@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Dbfields</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Dbname</th>
+      <th>Description</th>
+      <th>Fieldtype</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dbfields.each do |dbfield| %>
+      <tr>
+        <td><%= dbfield.name %></td>
+        <td><%= dbfield.dbname %></td>
+        <td><%= dbfield.description %></td>
+        <td><%= dbfield.fieldtype %></td>
+        <td><%= link_to 'Show', dbfield %></td>
+        <td><%= link_to 'Edit', edit_dbfield_path(dbfield) %></td>
+        <td><%= link_to 'Destroy', dbfield, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Dbfield', new_dbfield_path %>

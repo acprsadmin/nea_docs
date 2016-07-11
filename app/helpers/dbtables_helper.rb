@@ -1,0 +1,2 @@
+module DbtablesHelper
+end
