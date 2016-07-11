@@ -17,7 +17,8 @@
 <table id="requesttable"  class="hover" cellspacing="0" width="100%">
   <thead>
     <tr>
-      <th>Reference <span style="background-color: #ccc; color: #fff">(Old#)</span></th>
+      <th>ID</th>
+      <th>OldID</th>
       <th>Status</th>
       <th>Decision</th>
       <th>Subject</th>
@@ -70,9 +71,9 @@
               <% else %>
           PR-<%= request.id %>
             <% end %>
-          <% if request.oldcode %>&nbsp;&nbsp;<span style="background-color: #ccc; color: #fff">(<%= request.oldcode %>)</span><% end %>
-        </td>
 
+        </td>
+        <td><%= request.oldcode %></td>
 
         <td>
       <strong><%= request.textstatus %></strong>
