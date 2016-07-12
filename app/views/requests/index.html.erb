@@ -65,14 +65,7 @@
 
 
       <tr>
-        <td>
-<% if request.origin == 1 %>
-          CR-<%= request.id %>
-              <% else %>
-          PR-<%= request.id %>
-            <% end %>
-
-        </td>
+        <td><%= request.fullid %></td>
         <td><%= request.oldcode %></td>
 
         <td>

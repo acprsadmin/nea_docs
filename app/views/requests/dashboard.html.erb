@@ -11,7 +11,7 @@
         </div>
         <div class="panel-body">
           <% @newrequests.each do |rq| %>
-              <%= link_to rq.subject, rq %><br><br>
+              <%= rq.fullid %>: <%= link_to rq.subject, rq %><br><br>
           <% end %>
         </div>
       </div>
@@ -26,7 +26,7 @@
         </div>
         <div class="panel-body">
           <% @pendingresponse.each do |rq| %>
-              <%= link_to rq.subject, rq %><br><br>
+              <%= rq.fullid %>: <%= link_to rq.subject, rq %><br><br>
           <% end %>
         </div>
       </div>
@@ -39,7 +39,7 @@
         </div>
         <div class="panel-body">
           <% @pendingnea.each do |rq| %>
-              <%= link_to rq.subject, rq %><br><br>
+              <%= rq.fullid %>: <%= link_to rq.subject, rq %><br><br>
           <% end %>
         </div>
       </div>
@@ -53,7 +53,7 @@
         </div>
         <div class="panel-body">
           <% @ondeck.each do |rq| %>
-              <%= link_to rq.subject, rq %><br><br>
+              <%= rq.fullid %>: <%= link_to rq.subject, rq %><br><br>
           <% end %>
         </div>
       </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="panel-body">
           <% @indevelopment.each do |rq| %>
-              <%= link_to rq.subject, rq %><br><br>
+              <%= rq.fullid %>: <%= link_to rq.subject, rq %><br><br>
           <% end %>
         </div>
       </div>
@@ -80,7 +80,7 @@
         </div>
         <div class="panel-body">
           <% @ontesting.each do |rq| %>
-              <%= link_to rq.subject, rq %><br><br>
+              <%= rq.fullid %>: <%= link_to rq.subject, rq %><br><br>
           <% end %>
         </div>
       </div>
@@ -93,7 +93,7 @@
         </div>
         <div class="panel-body">
           <% @deployed.each do |rq| %>
-              <%= link_to rq.subject, rq %><br><br>
+              <%= rq.fullid %>: <%= link_to rq.subject, rq %><br><br>
           <% end %>
         </div>
       </div>
@@ -107,7 +107,7 @@
         </div>
         <div class="panel-body">
           <% @rejected.each do |rq| %>
-              <%= link_to rq.subject, rq %><br><br>
+              <%= rq.fullid %>: <%= link_to rq.subject, rq %><br><br>
           <% end %>
         </div>
       </div>
@@ -120,7 +120,7 @@
         </div>
         <div class="panel-body">
           <% @holding.each do |rq| %>
-              <%= link_to rq.subject, rq %><br><br>
+              <%= rq.fullid %>: <%= link_to rq.subject, rq %><br><br>
           <% end %>
         </div>
       </div>

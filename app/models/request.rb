@@ -74,6 +74,23 @@ class Request < ActiveRecord::Base
     end
   end
 
+  def fullid
+    if self.origin == 1
+        vid = '<span style="font-weight: bold; color: green">CR-' + self.id.to_s + '</span>'
+     else
+       vid = '<span style="font-weight: bold; color: darkblue">PR-' + self.id.to_s + '</span>'
+    end
+    return self.raw(vid)
+  end
+
+  def raw(stringish)
+
+    stringish.to_s.html_safe
+
+  end
+
+
+
 
 def textstatus
 
