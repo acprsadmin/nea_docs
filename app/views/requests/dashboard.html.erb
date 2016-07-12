@@ -1,0 +1,130 @@
+<div class="container">
+
+
+  <div class="row">
+<h1>ACPRS Request Dashboard</h1>
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">NEA New Requests</h3>
+        </div>
+        <div class="panel-body">
+          <% @newrequests.each do |rq| %>
+              <%= link_to rq.subject, rq %><br><br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Pillar Review</h3>
+        </div>
+        <div class="panel-body">
+          <% @pendingresponse.each do |rq| %>
+              <%= link_to rq.subject, rq %><br><br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">NEA Deciding</h3>
+        </div>
+        <div class="panel-body">
+          <% @pendingnea.each do |rq| %>
+              <%= link_to rq.subject, rq %><br><br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">On Deck</h3>
+        </div>
+        <div class="panel-body">
+          <% @ondeck.each do |rq| %>
+              <%= link_to rq.subject, rq %><br><br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">In Development</h3>
+        </div>
+        <div class="panel-body">
+          <% @indevelopment.each do |rq| %>
+              <%= link_to rq.subject, rq %><br><br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">On Testing</h3>
+        </div>
+        <div class="panel-body">
+          <% @ontesting.each do |rq| %>
+              <%= link_to rq.subject, rq %><br><br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Deployed Production</h3>
+        </div>
+        <div class="panel-body">
+          <% @deployed.each do |rq| %>
+              <%= link_to rq.subject, rq %><br><br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Rejected</h3>
+        </div>
+        <div class="panel-body">
+          <% @rejected.each do |rq| %>
+              <%= link_to rq.subject, rq %><br><br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">On Hold/Pending more info</h3>
+        </div>
+        <div class="panel-body">
+          <% @holding.each do |rq| %>
+              <%= link_to rq.subject, rq %><br><br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

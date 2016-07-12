@@ -197,7 +197,7 @@
 
 
           <% if @request.responded_on %>
-                <% if current_user.role != '4' %>
+                <% if current_user.role != 4 %>
                       <%= link_to 'Edit', edit_request_path(@request), :class => "btn btn-primary" %> <br><br>
                       <% if !@request.decided_on %>
                       <%= link_to 'Confirm Decision', submit_path(:request_id => @request.id, :reqaction => 'decide'), 'data-toggle' => 'modal', :class => "btn btn-success" %>
@@ -207,8 +207,8 @@
                 <% end %>
 
           <% elsif !@request.responded_on and @request.submitted_on %>
-                <%# if !@current.user.role != 3 %>
-                <% if current_user.role != '3' %>
+                <
+                <% if current_user.role != 3 %>
               <%= link_to 'Edit', edit_request_path(@request), :class => "btn btn-primary" %> <br><br>
               <%= link_to 'Respond to NEA', submit_path(:request_id => @request.id, :reqaction => 'respond'), 'data-toggle' => 'modal', :class => "btn btn-success" %><br><br>
 <% end %>

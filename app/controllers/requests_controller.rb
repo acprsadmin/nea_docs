@@ -7,6 +7,32 @@ class RequestsController < ApplicationController
     @requests = Request.all
   end
 
+  def dashboard
+    @newrequests = Request.where('submitted_on is NULL')
+    @pendingresponse = Request.where('submitted_on is not NULL and responded_on is NULL')
+    @pendingnea = Request.where('responded_on is not NULL and decided_on is NULL')
+    approved = Request.where('decided_on is not NULL and nea_decision = ?', 1)
+    @ondeck = approved.where('deployed_on is NULL and tested_on is NULL and developed_on is NULL')
+    @deployed = approved.where('deployed_on is not NULL')
+    @ontesting = approved.where('deployed_on is NULL and tested_on is not NULL')
+    @indevelopment = approved.where('deployed_on is NULL and tested_on is NULL and developed_on is not NULL')
+    @rejected = Request.where('decided_on is not NULL and nea_decision = ?', 2)
+    @holding = Request.where('decided_on is not NULL and nea_decision in (?)', [3,4])
+
+
+
+
+
+
+    render 'dashboard'
+  end
+
+
+
+
+
+
+
 
   # GET /requests/1
   # GET /requests/1.json
@@ -72,7 +98,7 @@ class RequestsController < ApplicationController
   def update
     respond_to do |format|
       if @request.update(request_params)
-        format.html { redirect_to requests_path, notice: 'Request was successfully updated.' }
+        format.html { redirect_to @request, notice: 'Request was successfully updated.' }
         format.json { render :show, status: :ok, location: @request }
       else
         format.html { render :edit }
@@ -100,7 +126,8 @@ def submit
   puts @request
 
   if params[:reqaction] == 'clone'
-    newrequest = Request.create(subject: @request.subject, creator_id: current_user.id)
+    newsubject = 'Cloned from ' + @request.subject
+    newrequest = Request.create(subject: newsubject, origin: @request.origin, creator_id: current_user.id)
 
   else
 

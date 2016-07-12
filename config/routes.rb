@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get 'granteeguide', to: 'visitors#grantee_guide', as: 'granteeguide'
   get 'adminguide', to: 'visitors#admin_guide', as: 'adminguide'
   get 'submit', to: 'requests#submit', as: 'submit'
+  get 'requestdash', to: 'requests#dashboard', as: 'requestdash'
   root 'requests#index'
 
 
