@@ -7,6 +7,12 @@ class Request < ActiveRecord::Base
   acts_as_commentable
   has_many :comments
 
+
+
+
+  has_many :site_documents
+  has_many :site_images
+
   belongs_to :user, :foreign_key => :approver_id
   belongs_to :user, :foreign_key => :responder_id
   belongs_to :user, :foreign_key => :creator_id

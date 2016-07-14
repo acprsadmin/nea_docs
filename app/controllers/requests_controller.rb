@@ -40,6 +40,14 @@ class RequestsController < ApplicationController
     @comments = Comment.where('(commentable_type = ? and commentable_id = ?)', 'Request', @request.id)
     @new_comment = Comment.new
 
+    @reqdocuments = SiteDocument.where('documentable_type = ? and documentable_id = ?', 'request', @request.id)
+    @new_site_document = SiteDocument.new
+
+    @reqimages = SiteImage.where('imageable_type = ? and imageable_id = ?', 'request', @request.id)
+    @new_site_image = SiteImage.new
+
+
+
     @thisstatus = @request.textstatus
 
     @requestlog = Requestlog.where('request_id = ?', @request.id).order('created_at DESC')

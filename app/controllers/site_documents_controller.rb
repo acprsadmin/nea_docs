@@ -30,8 +30,8 @@ class SiteDocumentsController < ApplicationController
     did = @site_document.documentable_id
     if dtype == 'post'
       d = Post.find(did)
-    elsif dtype == 'resource'
-      d = Resource.find(did)
+    elsif dtype == 'request'
+      d = Request.find(did)
     elsif dtype == 'series'
       d = Series.find(did)
     end

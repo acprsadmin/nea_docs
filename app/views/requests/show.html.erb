@@ -66,8 +66,26 @@
     </p>
 
   <hr>
-
-
+    <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">Attachments</div>
+        <div class="panel-body">
+          <% @reqdocuments.each do |doc| %>
+              <%= link_to doc.document_file_name , doc.document.url(:original, false) %>
+              <%= doc.document_updated_at %><br>
+          <% end %>
+          <%= simple_form_for @new_site_document do |form| %>
+              <%= form.hidden_field :documentable_id, :value => @request.id %>
+              <%= form.hidden_field :documentable_type, :value => 'request' %>
+              <%= form.input :document, as: :file %>
+              <%= form.button :submit, :value => 'Upload Document', :class => "mb-sm btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+<hr>
+    </div>
     <div class="panel panel-default">
       <div class="panel-heading">Pillar Response</div>
       <div class="panel-body">
